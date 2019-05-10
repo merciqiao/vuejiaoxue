@@ -10,8 +10,12 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-decoupled-document": "^12.1.0",
+    "axios": "^0.18.0",
+    "element-ui": "^2.8.2",
     "vue": "^2.5.2",
-    "vue-router": "^3.0.1"
+    "vue-router": "^3.0.1",
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
