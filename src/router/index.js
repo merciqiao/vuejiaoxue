@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
 
 Vue.use(Router)
 
@@ -8,8 +7,41 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'HelloWorld',
-      component: HelloWorld
+      redirect: '/index'
+    },
+    {
+      path: '/',
+      component: () => import('@/components/common/Home'),
+      meta: {
+        title: '自述文件'
+      },
+      children:[
+        {
+          path: '/index',
+          name: 'HelloWorld',
+          component: () => import('@/components/HelloWorld'),
+          meta: {
+            title: '系统首页'
+          }
+        },
+      ]
+    },
+    {
+      name:'404',
+      path: '/404',
+      component: () => import('@/components/common/404.vue'),
+      meta: { title: '路由不存在' }
+    },
+    {
+      name:'403',
+      path: '/403',
+      component: () => import('@/components/common/403.vue'),
+      meta: { title: '资源不可访问' }
+    },
+    {
+      path: '*',
+      redirect: '/404'
     }
-  ]
+  ],
+  mode:'history'
 })
