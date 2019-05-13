@@ -14,7 +14,6 @@ Vue.use(ElementUI)
 //2.引入axios
 import axios from 'axios';
 Vue.prototype.$http=axios;//将axios改写到vue原型属性,调用方式例如this.$http.post(xxx)
-
 //3.引入vuex
 import Vuex from 'vuex'
 Vue.use(Vuex)

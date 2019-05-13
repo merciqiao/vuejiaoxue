@@ -9,8 +9,14 @@ export default new Router({
       path: '/',
       redirect: '/index'
     },
+     {
+      name:'login',
+      path: '/login',
+      component: () => import('@/components/login.vue'),
+      meta: { title: '登录页' }
+    },
     {
-      path: '/',
+      path: '/home',
       component: () => import('@/components/common/Home'),
       meta: {
         title: '自述文件'
@@ -18,10 +24,18 @@ export default new Router({
       children:[
         {
           path: '/index',
-          name: 'HelloWorld',
+          name: '系统首页',
           component: () => import('@/components/HelloWorld'),
           meta: {
             title: '系统首页'
+          }
+        },
+         {
+          path: '/test01',
+          name: 'test01',
+          component: () => import('@/components/test/test01'),
+          meta: {
+            title: 'test01页'
           }
         },
       ]
