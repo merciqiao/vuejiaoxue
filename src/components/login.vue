@@ -80,9 +80,27 @@ export default {
             this.$http.post('/api/shiro-api/login', param)
             .then((response)=>{
                 console.log('成功报文:', response);
-                var data=response.data;
-                if(data.status=="SUCCESS"){
+                var json=response.data;
+                if(json.status=="SUCCESS"){
+                    //保存登陆信息
+                    var userInfo=json.data.userInfo;
+                    sessionStorage.setItem("userName",userInfo.userName);//用户名
+                    sessionStorage.setItem("token",userInfo.token);//保存秘钥
+                    var sysRoleVoList=json.data.sysRoleVoList;
+                    var position='';
+                    for(var i=0;i<sysRoleVoList.length;i++){
+                        var item=sysRoleVoList[i];
+                        if(position==''){
+                            position+=item.roleName;
+                        }
+                        else{
+                            position+='|'+item.roleName;
+                        }
+                    }
+                    sessionStorage.setItem("position",position);//用户职位
+                    //登陆成功跳转主页
                     this.$router.replace({ path: "/index" });
+
                 }
                 else{
                     this.errorInfo.isShowError = true;

@@ -25,7 +25,7 @@ export default new Router({
         {
           path: '/index',
           name: '系统首页',
-          component: () => import('@/components/HelloWorld'),
+          component: () => import('@/components/test/HelloWorld'),
           meta: {
             title: '系统首页'
           }

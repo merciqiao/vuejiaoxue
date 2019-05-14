@@ -8,7 +8,7 @@
         <div class="header-right">
             <div class="header-user-con">
                 <!-- <marquee onMouseOver="this.start()" style="font-size:18px;padding-bottom:4px;width:100px;" scrollamount="1">{{getlev}}</marquee> -->
-                <div style="font-size:18px;padding-bottom:4px;width:60px;">{{getlev}}</div>
+                <div style="font-size:18px;padding-bottom:4px;width:60px;">{{getPosition}}</div>
                 <!-- 全屏显示 -->
                 <div class="btn-fullscreen" @click="handleFullScreen">
                     <el-tooltip effect="dark" :content="fullscreen?`取消全屏`:`全屏`" placement="bottom">
@@ -52,35 +52,30 @@
             return {
                 collapse: false,
                 fullscreen: false,
-                name: 'merciqiao',
-                lev:'青铜级',
+                default_name: 'merciqiao',//默认用户名
+                default_position:'青铜级',//默认职位
                 message: 2
             }
         },
         computed:{
-            username(){
-                // let username = this.$common.getSessionStorage('username');
-                // return username ? username : this.name;
+            username(){//获取用户名
+                let username = sessionStorage.getItem("userName");
+                return username ? username : this.default_name;
             },
-            getlev(){
-        
-                // let levList = this.$common.getSessionStorage('lev',true);
-                // let lev='';
-                // if(levList){
-                //     for(var i=0;i<levList.length;i++){
-                //         lev+=levList[i].roleName;
-                //     }
-                // }
-               
-                // return lev ? lev : this.lev;
+            getPosition(){//获取职位
+                let position = sessionStorage.getItem("position");
+                return position ?position : this.default_position;
             }
         },
         methods:{
             // 用户名下拉菜单选择事件
             handleCommand(command) {
                 if(command == 'loginout'){
-                    // this.$common.removeSessionStorage('token');
-                    this.$router.push('/login');
+                    //退出登陆清空本地存储,关闭窗口也会自动清空
+                    sessionStorage.removeItem("userName");
+                    sessionStorage.removeItem("position");
+                    sessionStorage.removeItem("token");
+                    this.$router.replace('/login');
                 }
             },
             // 侧边栏折叠
