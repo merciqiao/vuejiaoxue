@@ -11,8 +11,20 @@
       <el-table-column prop="createtime" label="创建日期" :formatter="format_date"></el-table-column>
       <el-table-column prop="updatetime" label="更新日期" :formatter="format_date"></el-table-column>
     </el-table>
-
     <!--表格 end-->
+
+    <!--分页 start-->
+    <el-pagination
+      @size-change="handleSizeChange"
+      @current-change="handleCurrentChange"
+      :current-page="pageInfo.currentPage"
+      :page-sizes="[5, 10, 50, 100]"
+      :page-size="pageInfo.pageSize"
+      layout="total, sizes, prev, pager, next, jumper"
+      :total="pageInfo.pageTotal"
+    ></el-pagination>
+
+    <!--分页 end-->
   </div>
 </template>
 <script>
@@ -20,6 +32,11 @@ export default {
   name: "tablepage",
   data() {
     return {
+        pageInfo: { //分页
+                currentPage: 1,
+                pageSize: 5,
+                pageTotal: 80
+       },
       tableData: [
         {
           name: "张三",
@@ -74,7 +91,14 @@ export default {
         return "";
       }
       return this.$moment(date).format("YYYY-MM-DD HH:mm:ss");
+    },
+    handleSizeChange(val) {
+        console.log(`每页 ${val} 条`);
+    },
+    handleCurrentChange(val) {
+        console.log(`当前页: ${val}`);
     }
+
   }
 };
 </script>
