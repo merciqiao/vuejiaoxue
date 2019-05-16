@@ -43,12 +43,12 @@
                     },
                     {
                         icon: 'el-icon-tickets',
-                        index: 'kbms',
-                        title: '知识库管理',
+                        index: 'tablepage',
+                        title: '列表管理',
                         subs: [
                             {
-                                index: 'kbms',
-                                title: '知识库管理'
+                                index: 'tablepage',
+                                title: '列表管理'
                             }
                         ]
                     },

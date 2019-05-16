@@ -38,6 +38,14 @@ export default new Router({
             title: 'test01页'
           }
         },
+        {
+          path: '/tablepage',
+          name: 'tablepage',
+          component: () => import('@/components/tablepage/tablepage'),
+          meta: {
+            title: 'tablepage页'
+          }
+        },
       ]
     },
     {
