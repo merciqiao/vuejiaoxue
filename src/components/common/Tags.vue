@@ -5,7 +5,7 @@
                 <router-link :to="item.path" class="tags-li-title">
                     {{item.title}}
                 </router-link>
-                <span class="tags-li-icon" @click="closeTags(index)"><i class="el-icon-close"></i></span>
+                <span v-show="item.hideclose==false" class="tags-li-icon" @click="closeTags(index)"><i class="el-icon-close"></i></span>
             </li>
         </ul>
         <div class="tags-close-box">
@@ -37,7 +37,6 @@
             },
             // 关闭单个标签
             closeTags(index) {
-                debugger;
                 const delItem = this.tagsList.splice(index, 1)[0];
                 const item = this.tagsList[index] ? this.tagsList[index] : this.tagsList[index - 1];
                 if (item) {
@@ -67,7 +66,8 @@
                     title: route.meta.title,
                     path: route.fullPath,
                     // name: route.matched[1].components.default.name
-                    name: route.name
+                    name: route.name,
+                    hideclose:route.meta.hideclose?route.meta.hideclose:false,
                 })
                 bus.$emit('tags', this.tagsList);
             },

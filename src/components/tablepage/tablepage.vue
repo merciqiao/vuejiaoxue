@@ -1,8 +1,58 @@
 <template>
-  <div class="_tablepage">
+  <div class="_tablepage container">
+    <!-- 查询区 start -->
+    <el-form :inline="true" :model="formSearch" ref="formSearch" class="demo-form-inline" label-width="68px">
+      <el-form-item class="form_input" label="昵称" prop="name">
+        <el-input v-model="formSearch.name" placeholder="昵称"></el-input>
+      </el-form-item>
+      <el-form-item class="form_input" label="城市">
+        <el-input v-model="formSearch.city" placeholder="城市"></el-input>
+      </el-form-item>
+      <el-form-item class="form_select" label="类别">
+        <el-select v-model="formSearch.type" placeholder="类别">
+          <el-option label="留言" value="1"></el-option>
+          <el-option label="建议" value="2"></el-option>
+          <el-option label="BUG" value="3"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item class="form_input" label="年龄">
+        <el-input v-model="formSearch.age" placeholder="年龄"></el-input>
+      </el-form-item>
+      <el-form-item class="form_select" label="性别">
+        <el-select v-model="formSearch.gender" placeholder="性别">
+          <el-option label="男" value="1"></el-option>
+          <el-option label="女" value="2"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item class="form_input" label="qq">
+        <el-input v-model="formSearch.qq" placeholder="qq号"></el-input>
+      </el-form-item>
+      <el-form-item class="form_date" label="创建时间">
+        <el-date-picker
+          v-model="searchCreateDate"
+          type="daterange"
+          range-separator="至"
+          start-placeholder="开始日期"
+          end-placeholder="结束日期"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="onSearch">查询</el-button>
+        <el-button type="warning" @click="onReset" plain>重置</el-button>
+      </el-form-item>
+    </el-form>
+    <!-- 查询区 end -->
+    <!-- 操作区 start -->
+    <el-row class="operate">
+      <el-col :span="24">
+        <el-button type="primary" round>新增</el-button>
+        <el-button type="danger" round>批量删除</el-button>
+      </el-col>
+    </el-row>
+    <!-- 操作区 end -->
     <!--表格 start-->
-    <el-table :data="tableData" border style="width: 100%" align="center">
-      <el-table-column type="selection" width="55"></el-table-column>
+    <el-table :data="tableData" border style="width: 100%" align="center" v-loading="loading">
+      <el-table-column type="selection" width="55" align="center"></el-table-column>
       <el-table-column prop="name" label="昵称" width="180" align="center"></el-table-column>
       <el-table-column prop="city" label="城市" width="180"></el-table-column>
       <el-table-column prop="type" label="类别" :formatter="format_type"></el-table-column>
@@ -27,16 +77,45 @@
     <!--分页 end-->
   </div>
 </template>
+
+<style lang="scss">
+._tablepage {
+  // 覆写el样式,调整输入框宽度 start
+  .form_input {
+    .el-form-item__content {
+      width: 220px;
+    }
+  }
+  .form_select {
+    .el-select {
+      width: 220px;
+    }
+  }
+  .el-pagination {
+    padding-top: 5px;
+  }
+  .el-form-item {
+    margin-bottom: 10px;
+  }
+  // 覆写el样式,调整输入框宽度 end
+  .operate {
+    padding-bottom: 10px;
+  }
+}
+</style>
+
+
 <script>
 export default {
   name: "tablepage",
   data() {
     return {
-        pageInfo: { //分页
-                currentPage: 1,
-                pageSize: 5,
-                pageTotal: 80
-       },
+      pageInfo: {
+        //分页
+        currentPage: 1,
+        pageSize: 5,
+        pageTotal: 80
+      },
       tableData: [
         {
           name: "张三",
@@ -58,10 +137,55 @@ export default {
           createtime: 1546587784000,
           updatetime: 1546587784000
         }
-      ]
+      ],
+      formSearch: {
+        name: "",
+        city: "",
+        type: "",
+        age: null,
+        gender: null,
+        qq: "",
+        startdate: null, //开始时间
+        enddate: null //结束时间
+      },
+      searchCreateDate: "", //日期
+      loading: false //加载提示
     };
   },
+  mounted() {
+    this.onSearch();
+  },
   methods: {
+    onSearch() {
+      //查询
+      this.loading = true;
+      if (this.searchCreateDate) {
+        this.formSearch.startdate = this.searchCreateDate[0];
+        this.formSearch.enddate = this.searchCreateDate[1];
+      }
+      var param = Object.assign({}, this.formSearch, this.pageInfo);
+      this.$http
+        .post("/api/msg-api/queryList", param)
+        .then(response => {
+          var json = response.data;
+          if (json.status == "SUCCESS") {
+              this.tableData=json.data;
+              this.pageInfo.pageTotal=json.count;
+          } else {
+            this.$message({message: json.message,type: "warning"});
+          }
+        })
+        .catch(error => {
+          this.$message({message: '执行异常,请重试',type: "error"});
+        })
+        .finally(() => {
+          this.loading = false;
+        });
+    },
+    onReset() {
+      //重置
+      this.$refs['formSearch'].resetFields();
+    },
     format_type(row, column) {
       //类别转换
       var type = row[column.property];
@@ -93,12 +217,14 @@ export default {
       return this.$moment(date).format("YYYY-MM-DD HH:mm:ss");
     },
     handleSizeChange(val) {
-        console.log(`每页 ${val} 条`);
+      this.pageInfo.pageSize=val;
+      this.onSearch();
+      console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-        console.log(`当前页: ${val}`);
+      this.pageInfo.currentPage=val;
+      this.onSearch();
     }
-
   }
 };
 </script>
