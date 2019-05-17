@@ -1,7 +1,13 @@
 <template>
   <div class="_tablepage container">
     <!-- 查询区 start -->
-    <el-form :inline="true" :model="formSearch" ref="formSearch" class="demo-form-inline" label-width="68px">
+    <el-form
+      :inline="true"
+      :model="formSearch"
+      ref="formSearch"
+      class="demo-form-inline"
+      label-width="68px"
+    >
       <el-form-item class="form_input" label="昵称" prop="name">
         <el-input v-model="formSearch.name" placeholder="昵称"></el-input>
       </el-form-item>
@@ -45,7 +51,7 @@
     <!-- 操作区 start -->
     <el-row class="operate">
       <el-col :span="24">
-        <el-button type="primary" round>新增</el-button>
+        <el-button type="primary" round @click="onAddShow">新增</el-button>
         <el-button type="danger" round>批量删除</el-button>
       </el-col>
     </el-row>
@@ -75,9 +81,48 @@
     ></el-pagination>
 
     <!--分页 end-->
-    <!-- 新增 start -->
-
-    <!-- 新增 end -->
+    <!-- 新增，编辑，查看 start -->
+    <el-dialog :title="editDialogParam.title" :visible.sync="editDialogParam.show" width="700px"  @close="handleDialogClose">
+       <el-form
+      :inline="true"
+      :model="formEdit"
+      ref="formEdit"
+      class="demo-form-inline"
+      label-width="68px"
+      :rules="formEditRules"
+    >
+      <el-form-item class="form_input" label="昵称" prop="name">
+        <el-input v-model="formEdit.name" placeholder="昵称"></el-input>
+      </el-form-item>
+      <el-form-item class="form_input" label="城市" prop="city">
+        <el-input v-model="formEdit.city" placeholder="城市"></el-input>
+      </el-form-item>
+      <el-form-item class="form_select" label="类别" prop="type">
+        <el-select v-model="formEdit.type" placeholder="类别">
+          <el-option label="留言" value="1"></el-option>
+          <el-option label="建议" value="2"></el-option>
+          <el-option label="BUG" value="3"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item class="form_input" label="年龄" prop="age">
+        <el-input v-model="formEdit.age" placeholder="年龄"></el-input>
+      </el-form-item>
+      <el-form-item class="form_select" label="性别" prop="gender">
+        <el-select v-model="formEdit.gender" placeholder="性别">
+          <el-option label="男" value="1"></el-option>
+          <el-option label="女" value="2"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item class="form_input" label="qq" prop="qq">
+        <el-input v-model="formEdit.qq" placeholder="qq号"></el-input>
+      </el-form-item>
+    </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editDialogParam.show = false">取 消</el-button>
+        <el-button type="primary" @click="editDialogParam.show = false">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 新增，编辑，查看 end -->
   </div>
 </template>
 
@@ -98,7 +143,7 @@
     padding-top: 5px;
   }
   .el-form-item {
-    margin-bottom: 10px;
+    margin-bottom: 20px;
   }
   // 覆写el样式,调整输入框宽度 end
   .operate {
@@ -150,9 +195,33 @@ export default {
         qq: "",
         startdate: null, //开始时间
         enddate: null, //结束时间
-        createDate: "", //日期
+        createDate: "" //日期
       },
-      loading: false //加载提示
+      formEdit:{
+        name: "",
+        city: "",
+        type: "",
+        age: null,
+        gender: null,
+        qq: "",
+      },
+      formEditRules:{//校验规则
+        name: [
+            { required: true, message: '请输入昵称', trigger: 'blur' },
+            { min: 2, max: 4, message: '长度在 2 到 4 个字符', trigger: 'blur' }
+        ],
+        city:[{ required: true, message: "请输入城市", trigger: "blur" }],
+        type: [
+            { required: true, message: '请选择类型', trigger: 'change' }
+        ],
+        gender: [{ required: true, message: "请选择性别", trigger: "change" }]
+      },
+      loading: false, //加载提示
+      editDialogParam: {
+        //新增，查看，编辑框参数
+        title: "新增", //弹窗标题
+        show: false //弹框显示
+      }
     };
   },
   mounted() {
@@ -172,22 +241,25 @@ export default {
         .then(response => {
           var json = response.data;
           if (json.status == "SUCCESS") {
-              this.tableData=json.data;
-              this.pageInfo.pageTotal=json.count;
+            this.tableData = json.data;
+            this.pageInfo.pageTotal = json.count;
           } else {
-            this.$message({message: json.message,type: "warning"});
+            this.$message({ message: json.message, type: "warning" });
           }
         })
         .catch(error => {
-          this.$message({message: '执行异常,请重试',type: "error"});
+          this.$message({ message: "执行异常,请重试", type: "error" });
         })
         .finally(() => {
           this.loading = false;
         });
     },
+    onAddShow(){
+      this.editDialogParam.show=true;
+    },
     onReset() {
       //重置
-      this.$refs['formSearch'].resetFields();
+      this.$refs["formSearch"].resetFields();
     },
     format_type(row, column) {
       //类别转换
@@ -220,13 +292,16 @@ export default {
       return this.$moment(date).format("YYYY-MM-DD HH:mm:ss");
     },
     handleSizeChange(val) {
-      this.pageInfo.pageSize=val;
+      this.pageInfo.pageSize = val;
       this.onSearch();
       console.log(`每页 ${val} 条`);
     },
     handleCurrentChange(val) {
-      this.pageInfo.currentPage=val;
+      this.pageInfo.currentPage = val;
       this.onSearch();
+    },
+    handleDialogClose(){
+      this.$refs['formEdit'].resetFields();
     }
   }
 };
