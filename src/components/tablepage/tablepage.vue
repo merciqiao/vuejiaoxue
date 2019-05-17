@@ -119,7 +119,7 @@
     </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="editDialogParam.show = false">取 消</el-button>
-        <el-button type="primary" @click="editDialogParam.show = false">确 定</el-button>
+        <el-button type="primary" @click="onAdd();">确 定</el-button>
       </span>
     </el-dialog>
     <!-- 新增，编辑，查看 end -->
@@ -254,7 +254,38 @@ export default {
           this.loading = false;
         });
     },
+    onAdd(){
+        if(this.editDialogParam.title=="新增"){
+          this._save();
+        }
+    },
+    _save(){
+      this.$refs['formEdit'].validate((valid) => {
+          if (valid) {
+            var param=Object.assign({},this.formEdit);
+            this.$http.post('/api/msg-api/add',param)
+            .then((response)=>{
+                var json=response.data;
+                if(json.status=='SUCCESS'){
+                    this.$message({ message: '执行成功', type: "success" });
+                    this.onSearch();
+                    this.editDialogParam.show = false;
+                }
+                else{
+                   this.$message({ message: json.message, type: "error" });
+                }
+            })
+            .catch((error)=>{
+              this.$message({ message: "执行异常,请重试", type: "error" });
+            })
+            .finally(()=>{
+
+            });
+          } 
+        });
+    },
     onAddShow(){
+      this.editDialogParam.title="新增";
       this.editDialogParam.show=true;
     },
     onReset() {
