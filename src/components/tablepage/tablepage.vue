@@ -5,31 +5,31 @@
       <el-form-item class="form_input" label="昵称" prop="name">
         <el-input v-model="formSearch.name" placeholder="昵称"></el-input>
       </el-form-item>
-      <el-form-item class="form_input" label="城市">
+      <el-form-item class="form_input" label="城市" prop="city">
         <el-input v-model="formSearch.city" placeholder="城市"></el-input>
       </el-form-item>
-      <el-form-item class="form_select" label="类别">
+      <el-form-item class="form_select" label="类别" prop="type">
         <el-select v-model="formSearch.type" placeholder="类别">
           <el-option label="留言" value="1"></el-option>
           <el-option label="建议" value="2"></el-option>
           <el-option label="BUG" value="3"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class="form_input" label="年龄">
+      <el-form-item class="form_input" label="年龄" prop="age">
         <el-input v-model="formSearch.age" placeholder="年龄"></el-input>
       </el-form-item>
-      <el-form-item class="form_select" label="性别">
+      <el-form-item class="form_select" label="性别" prop="gender">
         <el-select v-model="formSearch.gender" placeholder="性别">
           <el-option label="男" value="1"></el-option>
           <el-option label="女" value="2"></el-option>
         </el-select>
       </el-form-item>
-      <el-form-item class="form_input" label="qq">
+      <el-form-item class="form_input" label="qq" prop="qq">
         <el-input v-model="formSearch.qq" placeholder="qq号"></el-input>
       </el-form-item>
-      <el-form-item class="form_date" label="创建时间">
+      <el-form-item class="form_date" label="创建时间" prop="createDate">
         <el-date-picker
-          v-model="searchCreateDate"
+          v-model="formSearch.createDate"
           type="daterange"
           range-separator="至"
           start-placeholder="开始日期"
@@ -75,6 +75,9 @@
     ></el-pagination>
 
     <!--分页 end-->
+    <!-- 新增 start -->
+
+    <!-- 新增 end -->
   </div>
 </template>
 
@@ -146,9 +149,9 @@ export default {
         gender: null,
         qq: "",
         startdate: null, //开始时间
-        enddate: null //结束时间
+        enddate: null, //结束时间
+        createDate: "", //日期
       },
-      searchCreateDate: "", //日期
       loading: false //加载提示
     };
   },
@@ -159,7 +162,7 @@ export default {
     onSearch() {
       //查询
       this.loading = true;
-      if (this.searchCreateDate) {
+      if (this.formSearch.createDate) {
         this.formSearch.startdate = this.searchCreateDate[0];
         this.formSearch.enddate = this.searchCreateDate[1];
       }
@@ -203,7 +206,7 @@ export default {
       var gender = row[column.property];
       if (gender == 1) {
         return "男";
-      } else if (gender == 0) {
+      } else if (gender == 2) {
         return "女";
       } else {
         return "";
