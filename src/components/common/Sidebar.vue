@@ -28,27 +28,30 @@
                 items: [
                     {
                         icon: 'el-icon-star-on',
-                        index: 'home',
+                        index: 'p_home',
                         title: '系统首页',
                         subs: [
                             {
-                                index: '/index',
-                                title: '系统首页'
+                                index: 'index',
+                                title: '系统首页',
+                                icon: 'el-icon-star-on',
                             },
                             {
-                                index: '/test01',
-                                title: 'test01页'
+                                index: 'test01',
+                                title: 'test01页',
+                                icon: 'el-icon-star-on',
                             }
                         ]
                     },
                     {
                         icon: 'el-icon-tickets',
-                        index: 'tablepage',
+                        index: 'p_tablepage',
                         title: '列表管理',
                         subs: [
                             {
                                 index: 'tablepage',
-                                title: '列表管理'
+                                title: '列表管理',
+                                icon: 'el-icon-star-on',
                             }
                         ]
                     },
