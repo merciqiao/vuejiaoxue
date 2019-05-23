@@ -16,6 +16,12 @@ export default new Router({
       meta: { title: '登录页' }
     },
     {
+      name:'homepage',
+      path: '/homepage',
+      component: () => import('@/components/homepage/homepage.vue'),
+      meta: { title: '登录页' }
+    },
+    {
       path: '/home',
       component: () => import('@/components/common/Home'),
       meta: {
