@@ -1,49 +1,63 @@
 <template>
   <div>
-    <el-menu
-      default-active="2"
-      class="el-menu-vertical-demo"
-      @open="handleOpen"
-      @close="handleClose"
-    >
-      <el-submenu index="1">
+    <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" unique-opened router>
+      <el-submenu v-for="(menu_one,i) in menuData" :key="i" :index="menu_one.path">
         <template slot="title">
-          <i class="el-icon-location"></i>
-          <span>导航一</span>
+          <i :class="menu_one.icon"></i>
+          <span>{{menu_one.title}}</span>
         </template>
-        <el-menu-item-group>
-          <template slot="title">分组一</template>
-          <el-menu-item index="1-1">选项1</el-menu-item>
-          <el-menu-item index="1-2">选项2</el-menu-item>
-        </el-menu-item-group>
-        <el-menu-item-group title="分组2">
-          <el-menu-item index="1-3">选项3</el-menu-item>
-        </el-menu-item-group>
-        <el-submenu index="1-4">
-          <template slot="title">选项4</template>
-          <el-menu-item index="1-4-1">选项1</el-menu-item>
-        </el-submenu>
+        <template v-if="menu_one.subs&&menu_one.subs.length">
+          <el-menu-item v-for="(menu_two,i) in menu_one.subs" :key="i" :index="menu_two">
+            <i :class="menu_two.icon"></i>
+            <span>{{menu_two.title}}</span>
+          </el-menu-item>
+        </template>
       </el-submenu>
-      <el-menu-item index="2">
-        <i class="el-icon-menu"></i>
-        <span slot="title">导航二</span>
-      </el-menu-item>
-      <el-menu-item index="3">
-        <i class="el-icon-setting"></i>
-        <span slot="title">导航三</span>
-      </el-menu-item>
     </el-menu>
   </div>
 </template>
 <script>
-  export default {
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath);
-      }
+export default {
+  data() {
+    return {
+      menuData: [
+        {
+          icon: "el-icon-star-on",
+          path: "p_home",
+          title: "系统首页",
+          subs: [
+            {
+              path: "index",
+              title: "系统首页",
+              icon: "el-icon-menu"
+            },
+            {
+              path: "test01",
+              title: "test01页",
+              icon: "el-icon-menu"
+            }
+          ]
+        },
+        {
+          icon: "el-icon-tickets",
+          path: "p_tablepage",
+          title: "列表管理",
+          subs: [
+            {
+              path: "tablepage",
+              title: "列表管理",
+              icon: "el-icon-menu"
+            }
+          ]
+        }
+      ]
+    };
+  },
+  methods: {},
+  computed:{
+    onRoutes(){
+      return this.$route.path.replace('/','');
     }
   }
+};
 </script>
