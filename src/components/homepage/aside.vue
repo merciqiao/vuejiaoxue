@@ -1,21 +1,31 @@
 <template>
-  <div>
-    <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" unique-opened router>
-      <el-submenu v-for="(menu_one,i) in menuData" :key="i" :index="menu_one.path">
-        <template slot="title">
-          <i :class="menu_one.icon"></i>
-          <span>{{menu_one.title}}</span>
-        </template>
-        <template v-if="menu_one.subs&&menu_one.subs.length">
-          <el-menu-item v-for="(menu_two,i) in menu_one.subs" :key="i" :index="menu_two">
-            <i :class="menu_two.icon"></i>
-            <span>{{menu_two.title}}</span>
-          </el-menu-item>
-        </template>
-      </el-submenu>
-    </el-menu>
-  </div>
+    <el-aside class="_aside">
+      <el-menu :default-active="onRoutes" class="el-menu-vertical-demo menu" unique-opened router>
+        <el-submenu v-for="(menu_one,i) in menuData" :key="i" :index="menu_one.path">
+          <template slot="title">
+            <i :class="menu_one.icon"></i>
+            <span>{{menu_one.title}}</span>
+          </template>
+          <template v-if="menu_one.subs&&menu_one.subs.length">
+            <el-menu-item v-for="(menu_two,i) in menu_one.subs" :key="i" :index="menu_two.path">
+              <i :class="menu_two.icon"></i>
+              <span>{{menu_two.title}}</span>
+            </el-menu-item>
+          </template>
+        </el-submenu>
+      </el-menu>
+    </el-aside>
 </template>
+<style lang="scss">
+  ._aside{
+    // border:1px solid green;
+    // border-right: 1px solid #e6e6e6
+    .menu{
+      height:100%;
+    }
+  }
+</style>
+
 <script>
 export default {
   data() {
@@ -29,12 +39,12 @@ export default {
             {
               path: "index",
               title: "系统首页",
-              icon: "el-icon-menu"
+              icon: "el-icon-document"
             },
             {
               path: "test01",
               title: "test01页",
-              icon: "el-icon-menu"
+              icon: "el-icon-document"
             }
           ]
         },
@@ -46,7 +56,7 @@ export default {
             {
               path: "tablepage",
               title: "列表管理",
-              icon: "el-icon-menu"
+              icon: "el-icon-document"
             }
           ]
         }
@@ -54,9 +64,9 @@ export default {
     };
   },
   methods: {},
-  computed:{
-    onRoutes(){
-      return this.$route.path.replace('/','');
+  computed: {
+    onRoutes() {
+      return this.$route.path.replace("/", "");
     }
   }
 };
