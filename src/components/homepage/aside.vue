@@ -18,8 +18,6 @@
 </template>
 <style lang="scss">
   ._aside{
-    // border:1px solid green;
-    // border-right: 1px solid #e6e6e6
     .menu{
       height:100%;
     }
@@ -65,7 +63,7 @@ export default {
   },
   methods: {},
   computed: {
-    onRoutes() {
+    onRoutes() {//监听路由,设置默认激活项目
       return this.$route.path.replace("/", "");
     }
   }
