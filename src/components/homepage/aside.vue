@@ -1,6 +1,6 @@
 <template>
-    <el-aside class="_aside">
-      <el-menu :default-active="onRoutes" class="el-menu-vertical-demo menu" unique-opened router>
+    <div class="_aside">
+      <el-menu :default-active="onRoutes" :collapse="navShow" class="el-menu-vertical-demo menu" unique-opened router >
         <el-submenu v-for="(menu_one,i) in menuData" :key="i" :index="menu_one.path">
           <template slot="title">
             <i :class="menu_one.icon"></i>
@@ -14,20 +14,25 @@
           </template>
         </el-submenu>
       </el-menu>
-    </el-aside>
+    </div>
 </template>
 <style lang="scss">
   ._aside{
     .menu{
       height:100%;
     }
+    .menu:not(.el-menu--collapse){//设置才可以有折叠特效
+      width:300px;
+    }
   }
 </style>
 
 <script>
+import bus from '../common/bus';
 export default {
   data() {
     return {
+      navShow:false,//导航是否折叠
       menuData: [
         {
           icon: "el-icon-star-on",
@@ -60,6 +65,11 @@ export default {
         }
       ]
     };
+  },
+  created() {
+    bus.$on("navShowChange",(navShow)=>{
+      this.navShow=navShow;
+    });
   },
   methods: {},
   computed: {

@@ -5,7 +5,9 @@
       <el-container class="el-container">
         <v-Aside></v-Aside>
         <el-container class="el-container is-vertical">
-          <el-main class="el-main">Main</el-main>
+          <el-main class="el-main">
+            <router-view></router-view>
+          </el-main>
           <v-Footer></v-Footer>
         </el-container>
       </el-container>

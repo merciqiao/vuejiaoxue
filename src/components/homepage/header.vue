@@ -1,46 +1,54 @@
 <template>
   <el-header class="_header">
-    <el-menu
-      class="el-menu-demo left"
-      mode="horizontal"
-      text-color="#fff"
-      background-color="#409EFF"
-    >
-      <el-menu-item>
-        <i class="el-icon-menu collapse-btn white"></i>
-      </el-menu-item>
-      <el-menu-item class="title nohover">后台管理系统</el-menu-item>
-    </el-menu>
-
-    <el-menu
-      class="el-menu-demo right"
-      mode="horizontal"
-      text-color="#fff"
-      background-color="#409EFF"
-    >
-      <el-menu-item class="font nohover">管理员</el-menu-item>
-      <el-menu-item>
-        <i class="el-icon-rank fullscreen white"></i>
-      </el-menu-item>
-      <el-menu-item>
-        <i class="el-icon-bell white"></i>
-      </el-menu-item>
-        <el-dropdown class="white font" trigger="click">
+    <div class="left">
+      <ul>
+        <li class="collapse-btn" @click="navChangeShow">
+          <i  class="el-icon-menu "></i>
+        </li>
+        <li class="nohover">后台管理系统</li>
+      </ul>
+    </div>
+    <div class="right">
+      <ul>
+        <li class="nohover">管理员</li>
+        <li><i class="el-icon-rank fullscreen"></i></li>
+        <li><i class="el-icon-bell notice"></i></li>
+        <li>
+          <el-dropdown class="white font" trigger="click" placement="bottom">
           <span class="el-dropdown-link">
             超超越越
             <i class="el-icon-arrow-down el-icon--right"></i>
           </span>
           <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>黄金糕</el-dropdown-item>
-            <el-dropdown-item>狮子头</el-dropdown-item>
-            <el-dropdown-item>螺蛳粉</el-dropdown-item>
-            <el-dropdown-item disabled>双皮奶</el-dropdown-item>
-            <el-dropdown-item divided>蚵仔煎</el-dropdown-item>
+            <el-dropdown-item>关于作者</el-dropdown-item>
+            <el-dropdown-item>Git地址</el-dropdown-item>
+            <el-dropdown-item divided>退出登录</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
-    </el-menu>
+        </li>
+      </ul>
+    </div>
+
   </el-header>
 </template>
+<script>
+import bus from '../common/bus';
+export default {
+  data() {
+    return {
+      navShow:false,//左侧导航是否折叠
+    }
+  },
+  methods: {
+    navChangeShow(){//切换左侧导航展示/折叠
+  
+      this.navShow=!this.navShow;
+      bus.$emit("navShowChange",this.navShow);
+    }
+  },
+}
+</script>
+
 <style lang="scss">
 ._header {
   padding: 0px;
@@ -49,34 +57,47 @@
   flex-flow: row nowrap;
   justify-content: space-between;
   color: white;
-  .white {
-    color: white;
+  ul{
+    list-style: none;  
+    li{
+      float: left;  
+      line-height: 60px;
+      height:60px;
+      text-align: center;
+      padding:0 10px;
+    }
+    li:hover{
+      background-color: #337ecc;
+      cursor: pointer;
+    }
+    i{
+      line-height: 60px;
+    }
   }
   .nohover {
     pointer-events: none; //禁用hover
   }
   .left {
-    border:0;
-    .collapse-btn:hover {
-      background-color: #337ecc;
+    .collapse-btn {
+      width:45px;
     }
     .title {
       font-size: 18px;
     }
   }
   .right {
-    border:0;
-    display: flex;
-    align-items: center;
-    .font {
-      font-size: 16px;
-    }
+    margin-right:60px;
     .fullscreen {
       transform: rotate(45deg); //旋转45度
       font-size: 22px;
+      width:40px;
+    }
+    .notice{
+      width:40px;
     }
     .el-dropdown-link{
-      cursor: pointer;
+      color:white;
+      padding:22px 0px;
     }
   }
 }

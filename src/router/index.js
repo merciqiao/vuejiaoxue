@@ -23,7 +23,8 @@ export default new Router({
     },
     {
       path: '/home',
-      component: () => import('@/components/common/Home'),
+      // component: () => import('@/components/common/Home'),
+      component: () => import('@/components/homepage/homepage.vue'),
       meta: {
         title: '自述文件'
       },
