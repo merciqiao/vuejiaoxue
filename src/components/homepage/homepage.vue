@@ -50,7 +50,7 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../../../static/theme/theme-red/index.css";
+@import "../../../static/theme/theme-blue/index.css";
 ._homepage {
   .ycy-container {
     height: 100vh;
@@ -75,8 +75,9 @@ export default {
         flex:auto;
         display: flex;
         flex-flow:column nowrap;
+        overflow: auto;
         .mainContainer{
-          border:1px solid red;
+          // border:1px solid red;
           background-color: #F0F0F0;//灰色背景
           flex:auto;
           display: flex;
@@ -86,7 +87,7 @@ export default {
           overflow: auto;
           padding:10px;
           .main{
-            border:1px solid green;
+            // border:1px solid green;
             flex:auto;
             background-color: white;
             box-sizing: border-box;
