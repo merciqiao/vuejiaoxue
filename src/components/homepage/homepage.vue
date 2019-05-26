@@ -75,7 +75,8 @@ export default {
         flex:auto;
         display: flex;
         flex-flow:column nowrap;
-        overflow: auto;
+        min-width:0;//保证内容不会超出外层容器
+        // overflow: auto;
         .mainContainer{
           // border:1px solid red;
           background-color: #F0F0F0;//灰色背景
