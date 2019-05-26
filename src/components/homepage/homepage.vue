@@ -12,8 +12,59 @@
         </el-container>
       </el-container>
     </el-container>
+    <!-- <section class="headContainer">
+      <v-Header></v-Header>
+      <section class="asideContainer">
+        <v-Aside></v-Aside>
+        <section class="mainContainer">
+          <main class="main">
+            <router-view></router-view>
+          </main>
+          <v-Footer class="footer"></v-Footer>
+        </section>
+      </section>
+    </section> -->
   </div>
 </template>
+<style lang="scss">
+@import "../../../static/theme/theme-red/index.css";
+._homepage {
+  .ycy-container {
+    height: 100vh;
+    .el-main {
+      height: calc(100vh - 120px);
+      overflow: auto;
+    }
+  }
+  .headContainer {
+    height: 100vh;
+    display: flex;
+    flex-flow: column nowrap;
+    .asideContainer {
+      display: flex;
+      flex-flow:row nowrap;
+      flex:auto;
+      .mainContainer{
+        display: flex;
+        flex-flow:column nowrap;
+        .main{
+          flex:auto;
+          height:calc(100vh - 120px);
+          overflow: auto;
+          box-sizing: border-box;
+          padding:10px;
+        }
+        .footer{
+          flex:0 0 60px;
+        }
+      }
+    }
+  }
+}
+</style>
+
+
+
 
 <script>
 import vAside from "./aside.vue";
@@ -26,18 +77,9 @@ export default {
   components: {
     vAside,
     vFooter,
-    vHeader,
+    vHeader
   }
 };
 </script>
 
-<style lang="scss">
-@import "../../../static/theme/theme-red/index.css";
-._homepage {
-  .el-container {
-    &.ycy-container {
-      height: 100vh;
-    }
-  }
-}
-</style>
+

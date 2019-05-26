@@ -1,5 +1,5 @@
 <template>
-  <div class="_tablepage container">
+  <div class="_tablepage">
     <!-- 查询区 start -->
     <el-form
       :inline="true"
