@@ -57,7 +57,8 @@
     </el-row>
     <!-- 操作区 end -->
     <!--表格 start-->
-    <el-table :data="tableData" border style="width: 100%" align="center" v-loading="loading">
+   
+ <el-table :data="tableData" border style="width: 100%" align="center" v-loading="loading">
       <el-table-column type="selection" width="55" align="center"></el-table-column>
       <el-table-column prop="name" label="昵称" width="180" align="center"></el-table-column>
       <el-table-column prop="city" label="城市" width="180"></el-table-column>
@@ -67,6 +68,8 @@
       <el-table-column prop="createtime" label="创建日期" :formatter="format_date"></el-table-column>
       <el-table-column prop="updatetime" label="更新日期" :formatter="format_date"></el-table-column>
     </el-table>
+  
+   
     <!--表格 end-->
 
     <!--分页 start-->

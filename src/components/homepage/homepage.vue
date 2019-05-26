@@ -68,7 +68,7 @@ export default {
       flex-flow:row nowrap;
       flex:auto;
       .aside{
-        flex:auto;
+        flex:none;
       }
       .tagContainer{
         // border:1px solid blue;
@@ -84,14 +84,13 @@ export default {
           box-sizing: border-box;
           height: calc(100vh - 100px);
           overflow: auto;
-          width:100%;
+          padding:10px;
           .main{
             border:1px solid green;
             flex:auto;
             background-color: white;
-            margin:10px;
+            box-sizing: border-box;
             padding:10px;
-  
           }
           .footer{
            flex:0 0 60px;
