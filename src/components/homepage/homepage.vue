@@ -1,31 +1,54 @@
 <template>
   <div class="_homepage">
-    <el-container class="el-container ycy-container is-vertical">
+    <!-- <el-container class="el-container ycy-container is-vertical">
       <v-Header></v-Header>
       <el-container class="el-container">
         <v-Aside></v-Aside>
         <el-container class="el-container is-vertical">
+          
           <el-main class="el-main">
             <router-view></router-view>
           </el-main>
           <v-Footer></v-Footer>
         </el-container>
       </el-container>
-    </el-container>
-    <!-- <section class="headContainer">
+    </el-container> -->
+    <section class="headContainer">
       <v-Header></v-Header>
       <section class="asideContainer">
-        <v-Aside></v-Aside>
-        <section class="mainContainer">
-          <main class="main">
-            <router-view></router-view>
-          </main>
-          <v-Footer class="footer"></v-Footer>
+        <v-Aside class="aside"></v-Aside>
+        <section class="tagContainer">
+          <v-Tag></v-Tag>
+          <div class="mainContainer">
+             <main class="main">
+              <router-view></router-view>
+            </main>
+            <v-Footer class="footer"></v-Footer>
+          </div>
         </section>
       </section>
-    </section> -->
+    </section>
   </div>
 </template>
+
+<script>
+import vAside from "./aside.vue";
+import vFooter from "./footer.vue";
+import vHeader from "./header.vue";
+import vTag from "./tag.vue";
+export default {
+  data() {
+    return {};
+  },
+  components: {
+    vAside,
+    vFooter,
+    vHeader,
+    vTag
+  }
+};
+</script>
+
 <style lang="scss">
 @import "../../../static/theme/theme-red/index.css";
 ._homepage {
@@ -44,42 +67,41 @@
       display: flex;
       flex-flow:row nowrap;
       flex:auto;
-      .mainContainer{
+      .aside{
+        flex:auto;
+      }
+      .tagContainer{
+        // border:1px solid blue;
+        flex:auto;
         display: flex;
         flex-flow:column nowrap;
-        .main{
+        .mainContainer{
+          border:1px solid red;
+          background-color: #F0F0F0;//灰色背景
           flex:auto;
-          height:calc(100vh - 120px);
-          overflow: auto;
+          display: flex;
+          flex-flow: column nowrap;
           box-sizing: border-box;
-          padding:10px;
+          height: calc(100vh - 100px);
+          overflow: auto;
+          width:100%;
+          .main{
+            border:1px solid green;
+            flex:auto;
+            background-color: white;
+            margin:10px;
+            padding:10px;
+  
+          }
+          .footer{
+           flex:0 0 60px;
+          }
         }
-        .footer{
-          flex:0 0 60px;
-        }
+        
       }
     }
   }
 }
 </style>
-
-
-
-
-<script>
-import vAside from "./aside.vue";
-import vFooter from "./footer.vue";
-import vHeader from "./header.vue";
-export default {
-  data() {
-    return {};
-  },
-  components: {
-    vAside,
-    vFooter,
-    vHeader
-  }
-};
-</script>
 
 
