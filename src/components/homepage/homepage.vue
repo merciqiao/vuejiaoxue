@@ -1,19 +1,24 @@
 <template>
   <div class="_homepage">
-    <!-- <el-container class="el-container ycy-container is-vertical">
+    <el-container v-if="!ycyShow" class="ycy-container is-vertical">
       <v-Header></v-Header>
-      <el-container class="el-container">
+      <el-container>
         <v-Aside></v-Aside>
-        <el-container class="el-container is-vertical">
-          
-          <el-main class="el-main">
-            <router-view></router-view>
-          </el-main>
-          <v-Footer></v-Footer>
+        <el-container class="is-vertical">
+          <el-container class="is-vertical">
+            <v-Tag></v-Tag>
+            <el-container class="scroll is-vertical">
+              <el-main class="ycy-main">
+                <router-view></router-view>
+              </el-main>
+              <v-Footer></v-Footer>
+            </el-container>
+          </el-container>
         </el-container>
       </el-container>
-    </el-container> -->
-    <section class="headContainer">
+    </el-container>
+
+    <section v-else class="headContainer">
       <v-Header></v-Header>
       <section class="asideContainer">
         <v-Aside class="aside"></v-Aside>
@@ -28,6 +33,7 @@
         </section>
       </section>
     </section>
+    
   </div>
 </template>
 
@@ -38,7 +44,9 @@ import vHeader from "./header.vue";
 import vTag from "./tag.vue";
 export default {
   data() {
-    return {};
+    return {
+      ycyShow:false//切换手写布局样式
+    };
   },
   components: {
     vAside,
@@ -52,53 +60,57 @@ export default {
 <style lang="scss">
 @import "../../../static/theme/theme-blue/index.css";
 ._homepage {
+  // elementui布局样式
   .ycy-container {
     height: 100vh;
-    .el-main {
-      height: calc(100vh - 120px);
+    .scroll {
+      height: calc(100vh - 160px);
       overflow: auto;
+      .ycy-main{
+        overflow:visible;
+      }
     }
   }
+  // 手写flex布局样式
   .headContainer {
     height: 100vh;
     display: flex;
     flex-flow: column nowrap;
     .asideContainer {
       display: flex;
-      flex-flow:row nowrap;
-      flex:auto;
-      .aside{
-        flex:none;
+      flex-flow: row nowrap;
+      flex: auto;
+      .aside {
+        flex: none;
       }
-      .tagContainer{
+      .tagContainer {
         // border:1px solid blue;
-        flex:auto;
+        flex: auto;
         display: flex;
-        flex-flow:column nowrap;
-        min-width:0;//保证内容不会超出外层容器
+        flex-flow: column nowrap;
+        min-width: 0; //保证内容不会超出外层容器
         // overflow: auto;
-        .mainContainer{
+        .mainContainer {
           // border:1px solid red;
-          background-color: #F0F0F0;//灰色背景
-          flex:auto;
+          background-color: #f0f0f0; //灰色背景
+          flex: auto;
           display: flex;
           flex-flow: column nowrap;
           box-sizing: border-box;
           height: calc(100vh - 100px);
           overflow: auto;
-          padding:10px;
-          .main{
+          padding: 10px 10px 0 10px;
+          .main {
             // border:1px solid green;
-            flex:auto;
+            flex: auto;
             background-color: white;
             box-sizing: border-box;
-            padding:10px;
+            padding: 10px;
           }
-          .footer{
-           flex:0 0 60px;
+          .footer {
+            flex: 0 0 60px;
           }
         }
-        
       }
     }
   }
