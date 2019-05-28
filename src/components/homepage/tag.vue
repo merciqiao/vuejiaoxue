@@ -13,14 +13,14 @@
     </div>
 
     <div class="right">
-      <el-dropdown trigger="click">
+      <el-dropdown trigger="click" @command="handleCloseBtn">
         <el-button type="primary" size="small">
           更多菜单
           <i class="el-icon-arrow-down el-icon--right"></i>
         </el-button>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>关闭其它</el-dropdown-item>
-          <el-dropdown-item>关闭所有</el-dropdown-item>
+          <el-dropdown-item command="closeOther">关闭其它</el-dropdown-item>
+          <el-dropdown-item command="closeAll">关闭所有</el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
     </div>
@@ -90,6 +90,30 @@ export default {
       } else {
         this.$router.push("/index");
       }
+    },
+    //关闭功能按钮
+    handleCloseBtn(command){
+      if(command=='closeOther'){//关闭其它,保留没有删除的标签
+        var activeTag=this.tagsList.find((item)=>{
+          return item.path==this.$route.fullPath;
+        });//查找第一个满足的
+        var noCloseTags=this.getNoCloseTabs();
+        if(!noCloseTags.some(item=>{return item.path==activeTag.path})){//不包含
+            noCloseTags=noCloseTags.concat(activeTag);
+        }
+        this.tagsList=noCloseTags;
+
+      }
+      else if(command=="closeAll"){//关闭所有,保留没有删除的标签
+        this.tagsList=this.getNoCloseTabs();
+        this.$router.push(this.tagsList[this.tagsList.length - 1].path);
+      }
+    },
+    getNoCloseTabs(){//获取没有删除的标签
+      var noCloseList=this.tagsList.filter(item=>{
+        return item.hideclose==true;
+      });
+      return noCloseList;
     },
     handleClick(tag) {
       this.$router.push(tag.fullPath);
