@@ -1,16 +1,19 @@
 <template>
   <div class="_tag">
-    <div class="left">
-      <el-tag
-        v-for="tag in tagsList"
-        :key="tag.title"
-        :closable="!tag.hideclose"
-        :type="isActive(tag)"
-        @close="handleCloseTag(tag)"
-      >
-        <router-link :to="tag.path" class="tag-title">{{tag.title}}</router-link>
-      </el-tag>
-    </div>
+    <el-scrollbar class="ycy_scrollbar">
+      <div class="left">
+        <el-tag
+          v-for="tag in tagsList"
+          :key="tag.title"
+          :closable="!tag.hideclose"
+          :type="isActive(tag)"
+          @close="handleCloseTag(tag)"
+        >
+          <router-link :to="tag.path" class="tag-title">{{tag.title}}</router-link>
+        </el-tag>
+      </div>
+      
+    </el-scrollbar>
 
     <div class="right">
       <el-dropdown trigger="click" @command="handleCloseBtn">
@@ -34,9 +37,14 @@
   background-color: white;
   border-bottom: 1px solid #e6e6e6;
   justify-content: space-between;
+  .ycy_scrollbar{
+    margin-right: 6px;
+  }
   .left {
     display: flex;
-    flex-flow:row nowrap;
+    flex-flow: row nowrap;
+    height:40px;
+    align-items: center;
     .el-tag {
       margin-left: 6px;
       .tag-title {
@@ -92,26 +100,32 @@ export default {
       }
     },
     //关闭功能按钮
-    handleCloseBtn(command){
-      if(command=='closeOther'){//关闭其它,保留没有删除的标签
-        var activeTag=this.tagsList.find((item)=>{
-          return item.path==this.$route.fullPath;
-        });//查找第一个满足的
-        var noCloseTags=this.getNoCloseTabs();
-        if(!noCloseTags.some(item=>{return item.path==activeTag.path})){//不包含
-            noCloseTags=noCloseTags.concat(activeTag);
+    handleCloseBtn(command) {
+      if (command == "closeOther") {
+        //关闭其它,保留没有删除的标签
+        var activeTag = this.tagsList.find(item => {
+          return item.path == this.$route.fullPath;
+        }); //查找第一个满足的
+        var noCloseTags = this.getNoCloseTabs();
+        if (
+          !noCloseTags.some(item => {
+            return (item.path == activeTag.path&&item.title==activeTag.title);
+          })
+        ) {
+          //不包含
+          noCloseTags = noCloseTags.concat(activeTag);
         }
-        this.tagsList=noCloseTags;
-
-      }
-      else if(command=="closeAll"){//关闭所有,保留没有删除的标签
-        this.tagsList=this.getNoCloseTabs();
+        this.tagsList = noCloseTags;
+      } else if (command == "closeAll") {
+        //关闭所有,保留没有删除的标签
+        this.tagsList = this.getNoCloseTabs();
         this.$router.push(this.tagsList[this.tagsList.length - 1].path);
       }
     },
-    getNoCloseTabs(){//获取没有删除的标签
-      var noCloseList=this.tagsList.filter(item=>{
-        return item.hideclose==true;
+    getNoCloseTabs() {
+      //获取没有删除的标签
+      var noCloseList = this.tagsList.filter(item => {
+        return item.hideclose == true;
       });
       return noCloseList;
     },

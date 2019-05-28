@@ -9,7 +9,9 @@
             <v-Tag></v-Tag>
             <el-container class="scroll is-vertical">
               <el-main class="ycy-main">
-                <router-view></router-view>
+                <transition name="fade" mode="out-in">
+                  <router-view class="view"></router-view>
+                </transition>
               </el-main>
               <v-Footer></v-Footer>
             </el-container>
@@ -25,7 +27,7 @@
         <section class="tagContainer">
           <v-Tag></v-Tag>
           <div class="mainContainer">
-             <main class="main">
+            <main class="main">
               <router-view></router-view>
             </main>
             <v-Footer class="footer"></v-Footer>
@@ -33,7 +35,6 @@
         </section>
       </section>
     </section>
-    
   </div>
 </template>
 
@@ -45,7 +46,7 @@ import vTag from "./tag.vue";
 export default {
   data() {
     return {
-      ycyShow:false//切换手写布局样式
+      ycyShow: false //切换手写布局样式
     };
   },
   components: {
@@ -66,8 +67,8 @@ export default {
     .scroll {
       height: calc(100vh - 160px);
       overflow: auto;
-      .ycy-main{
-        overflow:visible;
+      .ycy-main {
+        overflow: visible;
       }
     }
   }
@@ -114,6 +115,14 @@ export default {
       }
     }
   }
+
+  // 路由切换动画特效
+  .fade-enter-active, .fade-leave-active {
+  transition: opacity .1s;
+}
+.fade-enter, .fade-leave-to  {
+  opacity: 0;
+}
 }
 </style>
 
