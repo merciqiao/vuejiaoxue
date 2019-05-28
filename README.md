@@ -24,3 +24,27 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 cnpm install -D sass-loader
 //sass-loader依赖于node-sass
 cnpm install -D node-sass
+
+
+二.nginx配置(开启了gzip)
+server {
+        listen 6002;
+        server_name 101ycy.com:6002 www.101ycy.com:6002;
+        root /home/web/vuejiaoxue;
+        index index.html index.htm;
+
+        location /api {
+                add_header 'Access-Control-Allow-Origin' '*';
+                add_header 'Access-Control-Allow-Credentials' 'true';
+                add_header 'Access-Control-Allow-Methods' 'GET, POST, OPTIONS';
+                add_header 'Access-Control-Allow-Headers' 'DNT,X-CustomHeader,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type';
+                proxy_pass http://localhost:10001/;
+        }
+        location / {
+                 try_files $uri $uri/ /index.html last;
+                 index index.html;
+                 gzip  on;
+			  gzip_types text/plain application/x-javascript application/javascript text/css application/xml text/javascript application/x-httpd-php image/jpeg image/gif image/png;
+
+        }
+    }
