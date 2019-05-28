@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+
 
 Vue.config.productionTip = false
 //包引用------start
@@ -13,6 +13,8 @@ import ElementUI from 'element-ui'
 //自定义样式
 import "../static/theme/theme-blue/index.css";
 Vue.use(ElementUI)
+//后引入路由,组件内样式可以覆盖elementui样式
+import router from './router'
 
 //2.引入axios
 import axios from 'axios';
