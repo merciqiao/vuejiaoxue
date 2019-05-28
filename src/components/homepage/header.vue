@@ -24,8 +24,11 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <el-dropdown-item>关于作者</el-dropdown-item>
-              <el-dropdown-item>Git地址</el-dropdown-item>
+              <el-dropdown-item command="aboult">关于作者</el-dropdown-item>
+              <a href="https://github.com/merciqiao/vuejiaoxue.git" target="_blank">
+                <el-dropdown-item >Git地址</el-dropdown-item>
+              </a>
+              
               <el-dropdown-item divided command="loginout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -80,6 +83,9 @@ export default {
      handleCommand(command) {
        if(command=='loginout'){
          this.$router.replace('/login');
+       }
+       else if(command=='aboult'){
+         this.$message('QQ群:73110051');
        }
       }
   }
