@@ -6,11 +6,25 @@
 
 <script>
 export default {
-  name: 'App'
-}
+  name: "App"
+};
 </script>
 
 <style>
- @import "../static/css/main.css";
- @import "../static/css/theme-green/color-green.css"; 
+/*基础样式 start*/
+html,
+body,
+#app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+a {
+  text-decoration: none;
+}
+/*基础样式 end*/
 </style>

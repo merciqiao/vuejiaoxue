@@ -8,7 +8,10 @@ Vue.config.productionTip = false
 //包引用------start
 //1.引入element-ui
 import ElementUI from 'element-ui'
-import 'element-ui/lib/theme-chalk/index.css'
+//默认样式
+// import 'element-ui/lib/theme-chalk/index.css'
+//自定义样式
+import "../static/theme/theme-blue/index.css";
 Vue.use(ElementUI)
 
 //2.引入axios
