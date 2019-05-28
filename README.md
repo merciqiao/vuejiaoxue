@@ -20,6 +20,10 @@ npm run build --report
 
 For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
 
+
+重要说明:现在的home母版页改成了homepage目录下的母版页,代码要精炼很多
+
+
 一.安装sass
 cnpm install -D sass-loader
 //sass-loader依赖于node-sass
