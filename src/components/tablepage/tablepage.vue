@@ -233,7 +233,7 @@ export default {
   methods: {
     onSearch() {
       //查询
-      this.loading = true;
+      // this.loading = true;
       if (this.formSearch.createDate) {
         this.formSearch.startdate = this.searchCreateDate[0];
         this.formSearch.enddate = this.searchCreateDate[1];

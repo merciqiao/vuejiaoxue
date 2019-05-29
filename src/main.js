@@ -6,6 +6,10 @@ import App from './App'
 
 Vue.config.productionTip = false
 //包引用------start
+//0.引入babel-polyfill,兼容Ie,将es6转为es5
+import 'babel-polyfill'
+
+
 //1.引入element-ui
 import ElementUI from 'element-ui'
 //默认样式
@@ -29,6 +33,8 @@ import CKEditor from '@ckeditor/ckeditor5-build-decoupled-document'
 //5.引入moment,表格日期格式化
 import moment from 'moment'
 Vue.prototype.$moment=moment;//设置到vue原型属性,调用方式this.$moment(date).format("YYYY-MM-DD HH:mm:ss");
+
+
 //包引用------end
 
 /* eslint-disable no-new */
