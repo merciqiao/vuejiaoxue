@@ -10,7 +10,7 @@
     </div>
     <div class="right">
       <ul>
-        <li class="nohover">管理员</li>
+        <li class="nohover">{{position}}</li>
         <li>
           <i class="el-icon-rank fullscreen" @click="handleFullScreen"></i>
         </li>
@@ -20,7 +20,7 @@
         <li>
           <el-dropdown class="white font" trigger="click" placement="bottom" @command="handleCommand">
             <span class="el-dropdown-link">
-              超超越越
+              {{username}}
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
@@ -43,8 +43,14 @@ export default {
   data() {
     return {
       navShow: false, //左侧导航是否折叠
-      fullscreen: false //全屏
+      fullscreen: false, //全屏
+      position:'',//职位
+      username:'',//用户名
     };
+  },
+  mounted(){
+    this.position=sessionStorage.getItem('position');
+    this.username=sessionStorage.getItem('userName');
   },
   methods: {
     navChangeShow() {
@@ -82,6 +88,7 @@ export default {
     //下拉框事件
      handleCommand(command) {
        if(command=='loginout'){
+         sessionStorage.removeItem('token');
          this.$router.replace('/login');
        }
        else if(command=='aboult'){
