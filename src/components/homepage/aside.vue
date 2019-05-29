@@ -79,6 +79,9 @@ export default {
       this.navShow = navShow;
     });
   },
+  mounted(){
+    // debugger;
+  },
   methods: {},
   computed: {
     onRoutes() {

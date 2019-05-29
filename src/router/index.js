@@ -16,17 +16,10 @@ export default new Router({
       meta: { title: '登录页' }
     },
     {
-      name:'homepage',
-      path: '/homepage',
-      component: () => import('@/components/homepage/homepage.vue'),
-      meta: { title: '登录页' }
-    },
-    {
       path: '/home',
-      // component: () => import('@/components/common/Home'),
       component: () => import('@/components/homepage/homepage.vue'),
       meta: {
-        title: '自述文件'
+        title: '母版页'
       },
       children:[
         {
@@ -59,13 +52,13 @@ export default new Router({
     {
       name:'404',
       path: '/404',
-      component: () => import('@/components/common/404.vue'),
+      component: () => import('@/components/homepage/404.vue'),
       meta: { title: '路由不存在' }
     },
     {
       name:'403',
       path: '/403',
-      component: () => import('@/components/common/403.vue'),
+      component: () => import('@/components/homepage/403.vue'),
       meta: { title: '资源不可访问' }
     },
     {
