@@ -50,7 +50,7 @@
       .tag-title {
         color: black;
         // line-height: 32px;
-        padding: 0px 2px;
+        padding: 8px 2px;
       }
     }
   }

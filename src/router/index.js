@@ -28,7 +28,8 @@ export default new Router({
           component: () => import('@/components/test/HelloWorld'),
           meta: {
             title: '系统首页',
-            hideclose:true
+            hideclose:true,
+            role:['王者岗','白银岗']
           }
         },
          {
@@ -36,7 +37,8 @@ export default new Router({
           name: 'test01',
           component: () => import('@/components/test/test01'),
           meta: {
-            title: 'test01页'
+            title: 'test01页',
+            role:['白银岗']
           }
         },
         {
@@ -44,7 +46,8 @@ export default new Router({
           name: 'tablepage',
           component: () => import('@/components/tablepage/tablepage'),
           meta: {
-            title: 'tablepage页'
+            title: 'tablepage页',
+            role:['王者岗','白银岗']
           }
         },
       ]
