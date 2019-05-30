@@ -4,7 +4,7 @@ import axios from 'axios'
 
 Vue.use(Router)
 
-const router= new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -75,25 +75,25 @@ const router= new Router({
 /**
  * 全局路由守卫
  */
-const rightPathList=['/login','/404','/403'];//直接可以进入的页面
+const rightPathList = ['/login', '/404', '/403'];//直接可以进入的页面
 router.beforeEach((to, from, next) => {
   // debugger
   console.log('跳转到:', to.fullPath);
   var token = sessionStorage.getItem('token');
-  if (!token&&to.path!='/login') {//登陆认证校验,没登录则跳转/login
-      next({ path: '/login' })
+  if (!token && to.path != '/login') {//登陆认证校验,没登录则跳转/login
+    next({ path: '/login' })
   }
   else {//权限认证
-    if(rightPathList.includes(to.path)){
+    if (rightPathList.includes(to.path)) {
       next();
     }
-    else if(hasPermit(to)){
+    else if (hasPermit(to)) {
       next();
     }
-    else{
+    else {
       next('403');
     }
-    
+
   }
 })
 /**
@@ -101,29 +101,44 @@ router.beforeEach((to, from, next) => {
  */
 axios.interceptors.request.use(
   config => {
-      var headers=config.headers;
-      if(sessionStorage.getItem("token")){
-        headers.token=sessionStorage.getItem("token");
-      }
-      return config;
+    console.log('>>>请求url:',config.url);
+    var headers = config.headers;
+    if (sessionStorage.getItem("token")) {
+      headers.token = sessionStorage.getItem("token");
+    }
+    return config;
   },
-  err => {
-      return Promise.reject(err);
+  error => {
+    console.log('>>>请求异常:',error.message);
+    return Promise.reject(error);
   });
-
+//接口请求超时设置
+axios.defaults.timeout=5000;//毫秒
+/**
+ * 应答拦截器,添加请求头token
+ */
+axios.interceptors.response.use(function (response) {
+  // Do something with response data
+  console.log('<<<请求成功');
+  return response;
+}, error=> {
+  // Do something with response error
+  console.log('<<<异常信息:',error.message);
+  return Promise.reject(error);
+});
 
 
 //获取当前路由是否有权限访问
-function hasPermit(to){
-  var hasPermit=false;
-  if(to.meta&&to.meta.role){
-    var ruleList= getRuleList();
-    hasPermit=ruleList.some(rule=>{
+function hasPermit(to) {
+  var hasPermit = false;
+  if (to.meta && to.meta.role) {
+    var ruleList = getRuleList();
+    hasPermit = ruleList.some(rule => {
       return to.meta.role.includes(rule);
     });
   }
   return hasPermit;
-  
+
 }
 //获取登陆的角色集合
 function getRuleList() {
