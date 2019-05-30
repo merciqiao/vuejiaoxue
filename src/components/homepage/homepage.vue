@@ -4,17 +4,15 @@
       <v-Header></v-Header>
       <el-container>
         <v-Aside></v-Aside>
-        <el-container class="is-vertical">
-          <el-container class="is-vertical">
-            <v-Tag></v-Tag>
-            <el-container class="scroll is-vertical">
-              <el-main class="ycy-main">
-                <transition name="fade" mode="out-in">
-                  <router-view class="view"></router-view>
-                </transition>
-              </el-main>
-              <v-Footer></v-Footer>
-            </el-container>
+        <el-container class="is-vertical ycy-tag-container right">
+          <v-Tag></v-Tag>
+          <el-container class="scroll is-vertical">
+            <el-main class="ycy-main">
+              <transition name="fade" mode="out-in">
+                <router-view class="view"></router-view>
+              </transition>
+            </el-main>
+            <v-Footer></v-Footer>
           </el-container>
         </el-container>
       </el-container>
@@ -64,13 +62,17 @@ export default {
   // elementui布局样式
   .ycy-container {
     height: 100vh;
-    .scroll {
-      height: calc(100vh - 160px);
+    .ycy-tag-container {
       overflow: auto;
-      .ycy-main {
-        overflow: visible;
+      .scroll {
+        height: calc(100vh - 160px);
+        overflow: auto;
+        .ycy-main {
+          overflow: visible;
+        }
       }
     }
+    
   }
   // 手写flex布局样式
   .headContainer {
@@ -90,7 +92,7 @@ export default {
         display: flex;
         flex-flow: column nowrap;
         min-width: 0; //保证内容不会超出外层容器
-        // overflow: auto;
+        overflow: auto;
         .mainContainer {
           // border:1px solid red;
           background-color: #f0f0f0; //灰色背景
@@ -117,12 +119,14 @@ export default {
   }
 
   // 路由切换动画特效
-  .fade-enter-active, .fade-leave-active {
-  transition: opacity .1s;
-}
-.fade-enter, .fade-leave-to  {
-  opacity: 0;
-}
+  .fade-enter-active,
+  .fade-leave-active {
+    transition: opacity 0.1s;
+  }
+  .fade-enter,
+  .fade-leave-to {
+    opacity: 0;
+  }
 }
 </style>
 

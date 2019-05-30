@@ -28,7 +28,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 //4.引入ckeditor
-import CKEditor from '@ckeditor/ckeditor5-build-decoupled-document'
+// import CKEditor from '@ckeditor/ckeditor5-build-decoupled-document'
 
 //5.引入moment,表格日期格式化
 import moment from 'moment'
