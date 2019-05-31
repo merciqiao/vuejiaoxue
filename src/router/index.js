@@ -30,7 +30,7 @@ const router = new Router({
           meta: {
             title: '系统首页',
             hideclose: true,
-            role: ['王者岗', '白银岗']
+            role: ['王者岗', '白银岗','黄金岗']
           }
         },
         {
@@ -48,7 +48,7 @@ const router = new Router({
           component: () => import('@/components/tablepage/tablepage'),
           meta: {
             title: 'tablepage页',
-            role: ['王者岗', '白银岗']
+            role: ['王者岗', '白银岗','黄金岗']
           }
         },
       ]
