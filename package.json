@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@ckeditor/ckeditor5-build-decoupled-document": "^12.1.0",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "element-ui": "^2.8.2",
     "moment": "^2.24.0",
     "vue": "^2.5.2",
